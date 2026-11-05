@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Odyssey | Creative Developer Portfolio</title>
+  <meta name="description" content="Portofolio modern bertema luar angkasa dengan efek parallax, galeri proyek interaktif, dan animasi futuristik.">
+
+  <!-- Google Fonts: Orbitron, Space Grotesk, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/parallax.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Custom Cosmic Cursor -->
+  <div class="cosmic-cursor-dot"></div>
+  <div class="cosmic-cursor-ring"></div>
+
+  <!-- Interactive 2D Starfield & Meteor Canvas -->
+  <canvas id="starfield-canvas"></canvas>
+
+  <!-- Parallax Floating Celestial Viewport Background -->
+  <div class="parallax-viewport" aria-hidden="true">
+    <div class="nebula-glow nebula-1" data-parallax-speed="0.08" data-mouse-speed="0.03"></div>
+    <div class="nebula-glow nebula-2" data-parallax-speed="0.14" data-mouse-speed="0.05"></div>
+    <div class="nebula-glow nebula-3" data-parallax-speed="0.06" data-mouse-speed="0.02"></div>
+
+    <!-- Planet 1: Saturnus Gas Giant SVG -->
+    <div class="celestial-obj obj-saturn" data-parallax-speed="0.18" data-mouse-speed="0.06">
+      <svg viewBox="0 0 200 200" width="100%" height="100%">
+        <defs>
+          <linearGradient id="saturnBody" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbf24"/>
+            <stop offset="50%" stop-color="#f59e0b"/>
+            <stop offset="100%" stop-color="#b45309"/>
+          </linearGradient>
+          <linearGradient id="saturnRings" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(251, 191, 36, 0.1)"/>
+            <stop offset="50%" stop-color="rgba(251, 191, 36, 0.7)"/>
+            <stop offset="100%" stop-color="rgba(251, 191, 36, 0.1)"/>
+          </linearGradient>
+        </defs>
+        <!-- Ring back -->
+        <ellipse cx="100" cy="100" rx="90" ry="24" fill="none" stroke="url(#saturnRings)" stroke-width="12" transform="rotate(-25 100 100)"/>
+        <!-- Sphere body -->
+        <circle cx="100" cy="100" r="48" fill="url(#saturnBody)"/>
+        <!-- Ring front -->
+        <path d="M 20 100 A 90 24 0 0 0 180 100" fill="none" stroke="url(#saturnRings)" stroke-width="12" transform="rotate(-25 100 100)"/>
+      </svg>
+    </div>
+
+    <!-- Planet 2: Cyan Exoplanet SVG -->
+    <div class="celestial-obj obj-cyan-planet" data-parallax-speed="0.25" data-mouse-speed="0.08">
+      <svg viewBox="0 0 160 160" width="100%" height="100%">
+        <defs>
+          <radialGradient id="cyanPlanetGrad" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#a5f3fc"/>
+            <stop offset="40%" stop-color="#00f2fe"/>
+            <stop offset="85%" stop-color="#0e7490"/>
+            <stop offset="100%" stop-color="#082f49"/>
+          </radialGradient>
+        </defs>
+        <circle cx="80" cy="80" r="65" fill="url(#cyanPlanetGrad)"/>
+        <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(0, 242, 254, 0.3)" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <!-- Planet 3: Crimson Mars SVG -->
+    <div class="celestial-obj obj-mars" data-parallax-speed="0.32" data-mouse-speed="0.1">
+      <svg viewBox="0 0 120 120" width="100%" height="100%">
+        <defs>
+          <radialGradient id="marsGrad" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#fda4af"/>
+            <stop offset="45%" stop-color="#e11d48"/>
+            <stop offset="90%" stop-color="#881337"/>
+            <stop offset="100%" stop-color="#4c0519"/>
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="45" fill="url(#marsGrad)"/>
+      </svg>
+    </div>
+
+    <!-- Floating Astronaut SVG -->
+    <div class="celestial-obj obj-astronaut" data-parallax-speed="0.12" data-mouse-speed="0.05">
+      <svg viewBox="0 0 120 120" width="100%" height="100%">
+        <!-- Helmet -->
+        <circle cx="60" cy="40" r="26" fill="#e2e8f0" stroke="#00f2fe" stroke-width="2"/>
+        <ellipse cx="64" cy="40" rx="16" ry="12" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+        <circle cx="68" cy="36" r="3" fill="#fff" opacity="0.8"/>
+        <!-- Body Suit -->
+        <rect x="42" y="66" width="36" height="38" rx="10" fill="#f1f5f9"/>
+        <rect x="52" y="74" width="16" height="12" rx="3" fill="#0284c7"/>
+        <!-- Jetpack Backpack -->
+        <rect x="30" y="62" width="12" height="32" rx="4" fill="#64748b"/>
+        <!-- Arms -->
+        <path d="M42 70 Q 25 80 32 95" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <path d="M78 70 Q 95 60 90 45" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Satellite SVG -->
+    <div class="celestial-obj obj-satellite" data-parallax-speed="0.22" data-mouse-speed="0.07">
+      <svg viewBox="0 0 120 120" width="100%" height="100%">
+        <!-- Central Pod -->
+        <rect x="48" y="48" width="24" height="24" rx="4" fill="#e2e8f0" stroke="#00f2fe" stroke-width="1.5"/>
+        <!-- Solar Panels -->
+        <rect x="12" y="52" width="30" height="16" rx="2" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1"/>
+        <rect x="78" y="52" width="30" height="16" rx="2" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1"/>
+        <!-- Antenna -->
+        <line x1="60" y1="48" x2="60" y2="30" stroke="#00f2fe" stroke-width="2"/>
+        <circle cx="60" cy="28" r="3" fill="#ef4444"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Floating Navigation Bar -->
+  <header>
+    <nav class="navbar" id="navbar">
+      <a href="#hero" class="nav-brand">
+        <div class="nav-brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span>ASTRO<span style="color: var(--color-cyan);">.DEV</span></span>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#hero" class="nav-link active">Orbit</a></li>
+        <li><a href="#about" class="nav-link">Transmisi</a></li>
+        <li><a href="#projects" class="nav-link">Misi / Proyek</a></li>
+        <li><a href="#odyssey" class="nav-link">Perjalanan</a></li>
+        <li><a href="#contact" class="nav-link">Kontak</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Ambient Sound Synthesizer Toggle -->
+        <button class="btn-audio-toggle" id="audio-toggle-btn" title="Nyalakan suara ambient kosmik">
+          <div class="audio-waves">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span class="audio-label">Audio: OFF</span>
+        </button>
+
+        <button class="nav-mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="section hero" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-badge-wrap">
+              <span class="hero-status-pill">
+                <span class="status-dot-pulse"></span>
+                STATUS: ORBITING EARTH &bull; OPEN FOR MISSIONS
+              </span>
+            </div>
+
+            <h1 class="hero-title">
+              Merakit Realitas <br>
+              <span class="gradient-text">Di Ruang Angkasa</span> Digital.
+            </h1>
+
+            <p class="hero-desc">
+              Halo, saya seorang <strong>Creative Full-Stack Engineer</strong>. Saya membangun arsitektur aplikasi berskala tinggi, animasi interaktif 3D, serta antarmuka modern yang futuristik, cepat, dan responsif.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#projects" class="btn btn-cosmic btn-shine">
+                Jelajahi Galeri Misi
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="#contact" class="btn btn-outline-cosmic">
+                Kirimkan Sinyal
+              </a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat-item">
+                <h4 class="stat-number" data-target="24" data-suffix="+">0</h4>
+                <p>Misi Selesai</p>
+              </div>
+              <div class="stat-item">
+                <h4 class="stat-number" data-target="99.9" data-suffix="%" data-decimals="1">0</h4>
+                <p>Uptime & Kualitas</p>
+              </div>
+              <div class="stat-item">
+                <h4 class="stat-number" data-target="5" data-suffix="+">0</h4>
+                <p>Tahun Pengalaman</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Parallax Centerpiece -->
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-orbit-rings"></div>
+            <div class="hero-orbit-rings-outer"></div>
+
+            <div class="hero-center-planet">
+              <svg viewBox="0 0 300 300" width="100%" height="100%">
+                <defs>
+                  <radialGradient id="heroPlanetGlow" cx="35%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#67e8f9"/>
+                    <stop offset="30%" stop-color="#0284c7"/>
+                    <stop offset="70%" stop-color="#1e1b4b"/>
+                    <stop offset="100%" stop-color="#030712"/>
+                  </radialGradient>
+                  <filter id="planetAtmosphere" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="8" result="blur"/>
+                    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                  </filter>
+                </defs>
+                <circle cx="150" cy="150" r="115" fill="url(#heroPlanetGlow)" filter="url(#planetAtmosphere)"/>
+                <!-- Atmospheric Rim Glow -->
+                <circle cx="150" cy="150" r="116" fill="none" stroke="#00f2fe" stroke-width="3" opacity="0.65"/>
+              </svg>
+            </div>
+
+            <!-- Floating Telemetry Badges -->
+            <div class="hero-floating-badge badge-top-right">
+              <div class="badge-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <div class="badge-text">
+                <strong>Cutting-Edge Tech</strong>
+                <span>React, WebGL, AI, Node</span>
+              </div>
+            </div>
+
+            <div class="hero-floating-badge badge-bottom-left">
+              <div class="badge-icon" style="color: var(--color-purple-light); background: rgba(168, 85, 247, 0.15);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                </svg>
+              </div>
+              <div class="badge-text">
+                <strong>Ultra-Smooth UX</strong>
+                <span>60 FPS Parallax Shaders</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Transmission Log #01</span>
+          <h2 class="section-title">Profil & <span class="gradient-text-alt">Stasiun Operasi</span></h2>
+          <p class="section-subtitle">
+            Kombinasi antara presisi teknik rekayasa perangkat lunak dan kebebasan imajinasi visual tanpa batas.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <!-- Astronaut Hologram Card -->
+          <div class="glass-card astronaut-card tilt-card">
+            <div class="astronaut-avatar-wrap">
+              <svg viewBox="0 0 160 160">
+                <circle cx="80" cy="65" r="40" fill="#f8fafc" stroke="#00f2fe" stroke-width="3"/>
+                <ellipse cx="85" cy="65" rx="28" ry="20" fill="#0b1329" stroke="#38bdf8" stroke-width="2"/>
+                <path d="M68 56 Q 78 50 88 56" stroke="#fff" stroke-width="2" fill="none" opacity="0.8"/>
+                <rect x="50" y="105" width="60" height="55" rx="16" fill="#e2e8f0"/>
+                <rect x="65" y="115" width="30" height="18" rx="4" fill="#0284c7"/>
+              </svg>
+              <div class="astronaut-hud-beacon" title="Online in Orbit"></div>
+            </div>
+
+            <h3 class="astronaut-name">Alexandre Vance</h3>
+            <p class="astronaut-role">Lead Full-Stack Explorer</p>
+
+            <div class="astronaut-hud-data">
+              <div class="hud-data-point">
+                <span>Location</span>
+                <strong>Sector 07 (Earth)</strong>
+              </div>
+              <div class="hud-data-point">
+                <span>Codename</span>
+                <strong>ORBITAL-7X</strong>
+              </div>
+              <div class="hud-data-point">
+                <span>Specialty</span>
+                <strong>Full-Stack & WebGL</strong>
+              </div>
+              <div class="hud-data-point">
+                <span>Availability</span>
+                <strong>Freelance / Remote</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mission Overview & Tech Specs -->
+          <div class="mission-details">
+            <p class="mission-text-block">
+              Perjalanan saya dalam dunia pemrograman dimulai dari ketertarikan mendalam akan bagaimana baris-baris kode dapat menciptakan dunia interaktif di dalam layar. Saya berfokus pada pembangunan solusi digital yang tidak hanya berkinerja tinggi, namun juga menghadirkan pengalaman visual yang berkesan bagi pengguna.
+            </p>
+            <p class="mission-text-block">
+              Dengan perpaduan arsitektur backend yang solid dan antarmuka frontend yang imersif, setiap proyek dirancang selayaknya instrumen penerbangan luar angkasa: andal, terstruktur rapi, dan siap menghadapi beban tinggi.
+            </p>
+
+            <h4 class="skills-category-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--color-cyan);">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+              Sistem Inti & Teknologi Favorit:
+            </h4>
+
+            <div class="skills-grid">
+              <div class="skill-pill">
+                <span class="skill-pill-icon">⚛️</span>
+                <span class="skill-pill-name">React / Next.js</span>
+              </div>
+              <div class="skill-pill">
+                <span class="skill-pill-icon">🔷</span>
+                <span class="skill-pill-name">TypeScript</span>
+              </div>
+              <div class="skill-pill">
+                <span class="skill-pill-icon">🪐</span>
+                <span class="skill-pill-name">Three.js / WebGL</span>
+              </div>
+              <div class="skill-pill">
+                <span class="skill-pill-icon">🟢</span>
+                <span class="skill-pill-name">Node.js / Express</span>
+              </div>
+              <div class="skill-pill">
+                <span class="skill-pill-icon">🐍</span>
+                <span class="skill-pill-name">Python / FastAPI</span>
+              </div>
+              <div class="skill-pill">
+                <span class="skill-pill-icon">🎨</span>
+                <span class="skill-pill-name">TailwindCSS</span>
+              </div>
+              <div class="skill-pill">
+                <span class="skill-pill-icon">🐬</span>
+                <span class="skill-pill-name">PostgreSQL</span>
+              </div>
+              <div class="skill-pill">
+                <span class="skill-pill-icon">🐳</span>
+                <span class="skill-pill-name">Docker / Cloud</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROJECTS GALLERY SECTION ==================== -->
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Exploration Manifest</span>
+          <h2 class="section-title">Galeri <span class="gradient-text">Misi & Proyek</span></h2>
+          <p class="section-subtitle">
+            Kumpulan proyek pilihan yang menggabungkan estetika desain, arsitektur kode modern, dan performa optimal.
+          </p>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="gallery-controls">
+          <div class="gallery-search-wrap">
+            <svg class="gallery-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="project-search" class="gallery-search-input" placeholder="Cari misi, teknologi (React, AI, WebGL)...">
+          </div>
+
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">Semua Misi</button>
+            <button class="filter-btn" data-filter="web">Web Application</button>
+            <button class="filter-btn" data-filter="mobile">Mobile App</button>
+            <button class="filter-btn" data-filter="ai">AI & Data</button>
+            <button class="filter-btn" data-filter="ui">UI/UX & WebGL</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Projects Grid -->
+        <div class="projects-grid" id="projects-grid">
+          <!-- Injected via js/projects.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ODYSSEY / TIMELINE SECTION ==================== -->
+    <section class="section" id="odyssey">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Flight Route</span>
+          <h2 class="section-title">Rute <span class="gradient-text-alt">Perjalanan Karir</span></h2>
+          <p class="section-subtitle">
+            Titik-titik lompatan antarbintang dalam evolusi keahlian teknis dan kepemimpinan proyek.
+          </p>
+        </div>
+
+        <div class="timeline-track">
+          <!-- Timeline Node 1 -->
+          <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-date">2024 - Sekarang</div>
+            <h3 class="timeline-role">Senior Full-Stack Architect</h3>
+            <p class="timeline-org">Starlight Labs & Technologies</p>
+            <p class="timeline-desc">
+              Memimpin pengembangan arsitektur cloud microservices, mengintegrasikan fitur AI generatif, dan mengoptimalkan performa web aplikasi hingga 300% lebih cepat.
+            </p>
+          </div>
+
+          <!-- Timeline Node 2 -->
+          <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-date">2022 - 2024</div>
+            <h3 class="timeline-role">Creative Frontend Specialist</h3>
+            <p class="timeline-org">Nebula Interactive Studio</p>
+            <p class="timeline-desc">
+              Membangun antarmuka interaktif 3D berbasis WebGL/Three.js untuk brand global ternama dengan fokus pada smooth animation dan desain glassmorphism.
+            </p>
+          </div>
+
+          <!-- Timeline Node 3 -->
+          <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-date">2020 - 2022</div>
+            <h3 class="timeline-role">Software Engineer</h3>
+            <p class="timeline-org">Apex Digital Solutions</p>
+            <p class="timeline-desc">
+              Mengembangkan aplikasi enterprise, API gateway dengan Node.js, dan memelihara pipeline CI/CD serta automated testing komprehensif.
+            </p>
+          </div>
+
+          <!-- Timeline Node 4 -->
+          <div class="timeline-item">
+            <div class="timeline-node"></div>
+            <div class="timeline-date">2018 - 2020</div>
+            <h3 class="timeline-role">Junior Web Developer & Explorer</h3>
+            <p class="timeline-org">Cosmic Tech Academy</p>
+            <p class="timeline-desc">
+              Memulai eksplorasi dalam ekosistem JavaScript modern, desain UI/UX responsif, dan open-source software development.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Subspace Transceiver</span>
+          <h2 class="section-title">Kirimkan <span class="gradient-text">Transmisi Sinyal</span></h2>
+          <p class="section-subtitle">
+            Punya ide proyek luar biasa, kolaborasi ambisius, atau sekadar ingin berbincang seputar teknologi?
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Info Card -->
+          <div class="glass-card contact-info-card">
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.8rem; color: #fff;">Koordinat Komunikasi</h3>
+            <p style="margin-bottom: 1.5rem;">
+              Saluran transmisi terbuka 24/7. Respon biasanya diterima dalam waktu kurang dari satu putaran bumi (24 jam).
+            </p>
+
+            <div class="contact-channels">
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div class="channel-text">
+                  <span>Subspace Email</span>
+                  <strong>alexandre.vance@example.com</strong>
+                </div>
+              </div>
+
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="channel-text">
+                  <span>Base Location</span>
+                  <strong>Jakarta, Indonesia (UTC+7)</strong>
+                </div>
+              </div>
+
+              <div class="channel-item">
+                <div class="channel-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div class="channel-text">
+                  <span>Status Operasi</span>
+                  <strong style="color: #34d399;">Tersedia Untuk Proyek Baru</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transmission Form -->
+          <div class="glass-card contact-form-wrap">
+            <form id="contact-form">
+              <div class="form-group">
+                <label for="contact-name">Nama Pengirim</label>
+                <input type="text" id="contact-name" class="form-control" placeholder="Contoh: Capt. Amanda" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email">Frekuensi Email</label>
+                <input type="email" id="contact-email" class="form-control" placeholder="amanda@orbit.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-subject">Subjek Misi</label>
+                <input type="text" id="contact-subject" class="form-control" placeholder="Diskusi Proyek Web / Kolaborasi" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message">Isi Pesan Transmisi</label>
+                <textarea id="contact-message" class="form-control" placeholder="Ceritakan detail proyek atau ide yang ingin Anda kembangkan..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-cosmic btn-shine" style="width: 100%;">
+                Pancarkan Transmisi
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+
+              <div id="form-status" class="form-status"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Project Modal Overlay -->
+  <div class="modal-overlay" id="project-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-container" id="modal-container">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Tutup Detail">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="modal-media" id="modal-media-content"></div>
+      <div class="modal-body" id="modal-body-content"></div>
+    </div>
+  </div>
+
+  <!-- Interactive Meteor Shower Floating Button -->
+  <button class="meteor-trigger-btn" id="trigger-meteor-btn" title="Klik untuk memicu hujan meteor kosmik!">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+    </svg>
+    <span>Hujan Meteor ✦</span>
+  </button>
+
+  <!-- Back to top button -->
+  <button class="btn-back-top" id="btn-back-top" aria-label="Kembali ke atas">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        ASTRO<span style="color: var(--color-cyan);">.DEV</span> &copy; 2026 &bull; Dibuat dengan presisi di ruang angkasa digital.
+      </div>
+
+      <div class="footer-socials">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.5a1.69 1.69 0 1 0-.01-3.38 1.69 1.69 0 0 0 .01 3.38m1.39 10V9.63H5.07v8.87h2.78z"/>
+          </svg>
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" title="Twitter / X">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Scripts -->
+  <script src="js/starfield.js"></script>
+  <script src="js/parallax.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
+

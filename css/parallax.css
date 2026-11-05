@@ -1,0 +1,205 @@
+/* ===================================================================
+   PARALLAX LAYERS & CELESTIAL BACKGROUND DECORATIONS
+   =================================================================== */
+
+/* Canvas for Interactive Starfield & Meteors */
+#starfield-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-starfield);
+  pointer-events: none;
+}
+
+/* Parallax World Container */
+.parallax-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: var(--z-parallax-bg);
+  overflow: hidden;
+}
+
+/* Floating Nebula Light Blurs */
+.nebula-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.2s ease-out;
+}
+
+.nebula-1 {
+  width: 650px;
+  height: 650px;
+  top: -150px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(121, 40, 202, 0.45) 0%, rgba(0, 242, 254, 0.1) 70%, transparent 100%);
+}
+
+.nebula-2 {
+  width: 750px;
+  height: 750px;
+  top: 35%;
+  left: -200px;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.35) 0%, rgba(255, 0, 128, 0.15) 60%, transparent 100%);
+}
+
+.nebula-3 {
+  width: 600px;
+  height: 600px;
+  bottom: 5%;
+  right: -100px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.35) 0%, rgba(14, 165, 233, 0.15) 65%, transparent 100%);
+}
+
+/* Celestial Parallax Objects */
+.celestial-obj {
+  position: absolute;
+  pointer-events: none;
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Planet 1: Gas Giant Saturn-like */
+.obj-saturn {
+  top: 18%;
+  left: 6%;
+  width: 160px;
+  height: 160px;
+  opacity: 0.85;
+}
+
+/* Planet 2: Glowing Exoplanet Cyan */
+.obj-cyan-planet {
+  top: 55%;
+  right: 5%;
+  width: 130px;
+  height: 130px;
+  opacity: 0.8;
+}
+
+/* Planet 3: Mars Red / Crimson Sphere */
+.obj-mars {
+  top: 85%;
+  left: 10%;
+  width: 90px;
+  height: 90px;
+  opacity: 0.7;
+}
+
+/* Floating Astronaut Figure */
+.obj-astronaut {
+  top: 38%;
+  right: 8%;
+  width: 140px;
+  height: 140px;
+  animation: astronautFloat 12s ease-in-out infinite;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.4));
+}
+
+/* Orbital Satellite */
+.obj-satellite {
+  top: 72%;
+  left: 4%;
+  width: 100px;
+  height: 100px;
+  animation: satelliteOrbit 18s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+/* Floating Constellation Grid */
+.obj-constellation {
+  position: absolute;
+  top: 25%;
+  right: 22%;
+  width: 200px;
+  height: 200px;
+  opacity: 0.45;
+  stroke-dasharray: 4;
+  animation: constellationPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes astronautFloat {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(-18px, -24px) rotate(6deg);
+  }
+  66% {
+    transform: translate(14px, -15px) rotate(-4deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes satelliteOrbit {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(25px, 20px) rotate(12deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes constellationPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0.65;
+    transform: scale(1.05);
+  }
+}
+
+/* 3D Tilt Card Effect Setup */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.tilt-inner {
+  transform: translateZ(30px);
+  transition: transform 0.25s ease-out;
+}
+
+/* Interactive Meteor Shower Burst */
+.meteor-trigger-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  padding: 0.6rem 1.1rem;
+  background: rgba(14, 22, 54, 0.7);
+  border: 1px solid rgba(0, 242, 254, 0.35);
+  border-radius: var(--radius-full);
+  color: var(--color-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-fast);
+}
+
+.meteor-trigger-btn:hover {
+  background: rgba(0, 242, 254, 0.15);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+  transform: translateY(-2px);
+}
+
